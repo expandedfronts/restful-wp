@@ -17,6 +17,8 @@ class CommentmetaMapper {
 
 		// Build the table name to use for this mapper.
 		$this->table_name = $this->wpdb->prefix . 'commentmeta';
+
+		define( 'WP_SHOULD_EXIT', true );
 	}
 
 	public function create_meta( $data ) {

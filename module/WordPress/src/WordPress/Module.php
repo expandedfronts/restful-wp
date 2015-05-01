@@ -7,7 +7,6 @@ class Module implements ApigilityProviderInterface
 {
 
     public function __construct() {
-        require( WP_LOAD_FILE );
     }
 
     public function getConfig()

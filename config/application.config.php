@@ -7,10 +7,8 @@
 return array(
     'modules' => array(
         'Application',
-        'ZF\\DevelopmentMode',
         'ZF\\Apigility',
         'ZF\\Apigility\\Provider',
-        'ZF\\Apigility\\Documentation',
         'AssetManager',
         'ZF\\ApiProblem',
         'ZF\\Configuration',
@@ -26,8 +24,8 @@ return array(
     ),
     'module_listener_options' => array(
         'module_paths' => array(
-            './module',
-            './vendor'
+            RESTFULWP_PATH . 'module',
+            RESTFULWP_PATH . 'vendor'
         ),
         'config_glob_paths' => array(
             'config/autoload/{,*.}{global,local}.php'

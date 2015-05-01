@@ -1,11 +1,14 @@
 <?php
+
+$api_url = apply_filters( 'restful_wp_api_url', 'api' );
+
 return array(
     'router' => array(
         'routes' => array(
             'word-press.rest.posts' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/posts[/:posts_id]',
+                    'route' => "/$api_url/posts[/:posts_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Posts\\Controller',
                     ),
@@ -14,7 +17,7 @@ return array(
             'word-press.rest.users' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/users[/:users_id]',
+                    'route' => "/$api_url/users[/:users_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Users\\Controller',
                     ),
@@ -23,7 +26,7 @@ return array(
             'word-press.rest.comments' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/comments[/:comments_id]',
+                    'route' => "/$api_url/comments[/:comments_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Comments\\Controller',
                     ),
@@ -32,7 +35,7 @@ return array(
             'word-press.rest.options' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/options[/:options_id]',
+                    'route' => "/$api_url/options[/:options_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Options\\Controller',
                     ),
@@ -41,7 +44,7 @@ return array(
             'word-press.rest.taxonomies' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/taxonomies[/:taxonomies_id]',
+                    'route' => "/$api_url/taxonomies[/:taxonomies_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Taxonomies\\Controller',
                     ),
@@ -50,7 +53,7 @@ return array(
             'word-press.rest.usermeta' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/users/:user_id/meta[/:usermeta_id]',
+                    'route' => "/$api_url/users/:user_id/meta[/:usermeta_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Usermeta\\Controller',
                     ),
@@ -59,7 +62,7 @@ return array(
             'word-press.rest.commentmeta' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/comments/:comment_id/meta[/:commentmeta_id]',
+                    'route' => "/$api_url/comments/:comment_id/meta[/:commentmeta_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Commentmeta\\Controller',
                     ),
@@ -68,7 +71,7 @@ return array(
             'word-press.rest.postmeta' => array(
                 'type' => 'Segment',
                 'options' => array(
-                    'route' => '/posts/:post_id/meta[/:postmeta_id]',
+                    'route' => "/$api_url/posts/:post_id/meta[/:postmeta_id]",
                     'defaults' => array(
                         'controller' => 'WordPress\\V1\\Rest\\Postmeta\\Controller',
                     ),

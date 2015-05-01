@@ -18,6 +18,8 @@ class UsersMapper {
 
 		// Build the table name to use for this mapper.
 		$this->table_name = $this->wpdb->prefix . 'users';
+
+		define( 'WP_SHOULD_EXIT', true );
 	}
 
 	public function create_user( $data ) {
