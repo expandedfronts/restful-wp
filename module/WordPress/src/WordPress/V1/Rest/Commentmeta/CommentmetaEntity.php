@@ -14,7 +14,7 @@ class CommentmetaEntity
 	public function getArrayCopy() {
 		return array(
 			'meta_id' 		=> $this->meta_id,
-			'post_id' 		=> $this->comment_id,
+			'comment_id' 	=> $this->comment_id,
 			'meta_key' 		=> $this->meta_key,
 			'meta_value' 	=> $this->meta_value,
 		);

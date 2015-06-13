@@ -6,16 +6,17 @@ use ZF\Rest\AbstractResourceListener;
 
 class TaxonomiesResource extends AbstractResourceListener
 {
-
     /**
-     * Stores an instance of the TaxonomiesMapper.
+     * Stores an instance of the TaxonomiesMapper object
      * @var TaxonomiesMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the TaxonomiesResource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The TaxonomiesMapper object
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
@@ -29,7 +30,7 @@ class TaxonomiesResource extends AbstractResourceListener
      */
     public function create($data)
     {
-        return $this->mapper->create_taxonomy( $data );
+        return new ApiProblem(405, 'The POST method has not been defined');
     }
 
     /**
@@ -40,7 +41,7 @@ class TaxonomiesResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return $this->mapper->delete_taxonomy( $id );
+        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
     }
 
     /**
@@ -62,7 +63,7 @@ class TaxonomiesResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return $this->mapper->fetch_taxonomy( $id );
+        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
     }
 
     /**
@@ -73,7 +74,7 @@ class TaxonomiesResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return $this->mapper->fetch_taxonomies( $params );
+        return new ApiProblem(405, 'The GET method has not been defined for collections');
     }
 
     /**
@@ -108,6 +109,6 @@ class TaxonomiesResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return $this->mapper->update_taxonomy( $id, $data );
+        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
     }
 }

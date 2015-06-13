@@ -6,7 +6,7 @@
  *
  * Plugin Name:       RESTful WP
  * Plugin URI:        https://expandedfronts.com
- * Description:       A REST API for WordPress.
+ * Description:       A RESTful API for WordPress.
  * Version:           0.1
  * Author:            Expanded Fronts, LLC
  * Author URI:        http://expandedfronts.com/
@@ -47,6 +47,10 @@ final class RESTful_WP {
 	 */
 	private static $instance;
 
+	/**
+	 * Stores an instance of ZendFramework.
+	 * @var Zend\MVC\Application
+	 */
 	public static $zend_instance;
 
 	/**
@@ -68,7 +72,7 @@ final class RESTful_WP {
 	 * @access private
 	 */
 	private function __clone() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'revisr'), '1.8' );
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'restful-wp'), '1.8' );
 	}
 
 	/**
@@ -76,7 +80,7 @@ final class RESTful_WP {
 	 * @access private
 	 */
 	private function __wakeup() {
-		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'revisr'), '1.8' );
+		_doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'restful-wp'), '1.8' );
 	}
 
 	/**
@@ -97,8 +101,8 @@ final class RESTful_WP {
 			// Define any constants.
 			self::$instance->define_constants();
 
-			// Load the rest of the instance.
-			add_action( 'plugins_loaded', array( __CLASS__, 'load_instance' ) );
+			// Load the instance after everything else has had a chance to load.
+			add_action( 'after_setup_theme', array( __CLASS__, 'load_instance' ) );
 
 		}
 
@@ -106,7 +110,7 @@ final class RESTful_WP {
 	}
 
 	/**
-	 * Defines the constants used by RESTful WP.
+	 * Defines the constants used throughout the RESTful WP plugin.
 	 * @access private
 	 */
 	private function define_constants() {
@@ -136,18 +140,18 @@ final class RESTful_WP {
 		$config = include RESTFULWP_PATH . 'config/application.config.php';
 
 		// Allows for customizing the API url.
-		add_filter( 'restful_wp_api_url', array( __CLASS__, 'get_api_url' ) );
+		add_filter( 'restful_wp_api_slug', array( __CLASS__, 'get_api_slug' ) );
 
 
-		// Only run on api pages.
-		if ( strpos( $_SERVER['REQUEST_URI'], RESTful_WP::get_api_url() ) !== false ) {
+		// Only run on API requests.
+		if ( strpos( $_SERVER['REQUEST_URI'], RESTful_WP::get_api_slug() ) !== false ) {
 
 			// Run the application!
 			self::$zend_instance = Zend\Mvc\Application::init( $config )->run();
 
 			// Tell WordPress to beat it, maybe.
-			if ( defined( 'WP_SHOULD_EXIT') && WP_SHOULD_EXIT ) {
-				exit;
+			if ( defined( 'RESTFULWP_REQUEST_SERVED') && RESTFULWP_REQUEST_SERVED ) {
+				exit();
 			}
 
 		}
@@ -158,15 +162,20 @@ final class RESTful_WP {
 		}
 	}
 
-	public static function get_api_url() {
-		return 'restful-wp';
+	/**
+	 * Returns the API slug/prefix.
+	 * @access public
+	 * @return string
+	 */
+	public static function get_api_slug() {
+		return get_option( 'restful_wp_api_slug' ) ? get_option( 'restful_wp_api_slug' ) : 'restful-wp';
 	}
 
 
 }
 
 /**
- * Returns an instance of the RESTful WP instance.
+ * Returns an instance of RESTful WP.
  * @access public
  * @return object
  */

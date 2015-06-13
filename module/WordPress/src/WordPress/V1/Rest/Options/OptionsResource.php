@@ -8,14 +8,16 @@ class OptionsResource extends AbstractResourceListener
 {
 
     /**
-     * Stores a reference to the Options Mapper.
+     * Stores an instance of the OptionsMapper object.
      * @var OptionsMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the Options Resource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The OptionsMapper class.
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
@@ -108,8 +110,6 @@ class OptionsResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        var_dump( $data );
-        return new ApiProblem(405, 'The PATCH method has not been defined for individual resources');
         return $this->mapper->update_option( $id, $data );
     }
 }

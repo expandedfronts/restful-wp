@@ -8,18 +8,21 @@ class UsermetaResource extends AbstractResourceListener
 {
 
     /**
-     * Stores a reference to the Usermeta Mapper.
+     * Stores an instance of the UsermetaMapper object
      * @var UsermetaMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the Usermeta Resource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The UsermetaMapper object
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
     }
+
     /**
      * Create a resource
      *
@@ -110,7 +113,13 @@ class UsermetaResource extends AbstractResourceListener
         return $this->mapper->update_meta( $id, $data, $this->get_user_id() );
     }
 
+    /**
+     * Returns the ID of the current queried user.
+     *
+     * @access private
+     * @return int
+     */
     private function get_user_id() {
         return $this->getEvent()->getRouteMatch()->getParam('user_id');
-    }
+    }    
 }

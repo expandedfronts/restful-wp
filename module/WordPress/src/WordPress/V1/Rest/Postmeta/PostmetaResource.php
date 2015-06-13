@@ -8,14 +8,16 @@ class PostmetaResource extends AbstractResourceListener
 {
 
     /**
-     * Stores a reference to the Postmeta Mapper.
+     * Stores an instance of the PostmetaMapper object.
      * @var PostmetaMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the PostmetaResource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The PostmetaMapper class.
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
@@ -111,7 +113,13 @@ class PostmetaResource extends AbstractResourceListener
         return $this->mapper->update_meta( $id, $data, $this->get_post_id() );
     }
 
+    /**
+     * Returns the ID of the current post.
+     *
+     * @access private
+     * @return int
+     */
     private function get_post_id() {
-        return $this->getEvent()->getRouteMatch()->getParam('post_id');
+        return $this->getEvent()->getRouteMatch()->getParam( 'post_id' );
     }
 }

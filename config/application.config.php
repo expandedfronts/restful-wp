@@ -4,11 +4,17 @@
  *
  * The previous config file has been stored in application.config.old
  */
+
+// Allows use of application both in WP and in Apigility.
+$module_path = defined( 'RESTFULWP_PATH' ) ? RESTFULWP_PATH : './';
+
 return array(
     'modules' => array(
         'Application',
+        'ZF\\DevelopmentMode',
         'ZF\\Apigility',
         'ZF\\Apigility\\Provider',
+        'ZF\\Apigility\\Documentation',
         'AssetManager',
         'ZF\\ApiProblem',
         'ZF\\Configuration',
@@ -20,15 +26,20 @@ return array(
         'ZF\\Rest',
         'ZF\\Rpc',
         'ZF\\Versioning',
-        'WordPress'
+        'WordPress',
     ),
     'module_listener_options' => array(
         'module_paths' => array(
-            RESTFULWP_PATH . 'module',
-            RESTFULWP_PATH . 'vendor'
+            $module_path . 'module',
+            $module_path . 'vendor',
         ),
         'config_glob_paths' => array(
-            'config/autoload/{,*.}{global,local}.php'
-        )
-    )
+            '/Users/matt/Repositories/RESTful-WP_API/config/autoload/{,*.}{global,local}.php',
+        ),
+        'config_cache_key' => 'application.config.cache',
+        'config_cache_enabled' => true,
+        'module_map_cache_key' => 'application.module.cache',
+        'module_map_cache_enabled' => true,
+        'cache_dir' => 'data/cache/',
+    ),
 );

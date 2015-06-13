@@ -6,37 +6,33 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 
 class TaxonomiesMapper {
 
+	/**
+	 * The WordPress database object.
+	 * @var WPDB
+	 */
 	protected $wpdb;
 
+	/**
+	 * Stores the table name for this endpoint.
+	 * @var string
+	 */
 	protected $table_name;
 
+	/**
+	 * Constructs the class.
+	 * @access public
+	 */
 	public function __construct() {
 
-		// Store the WordPress database object.
+		// Initialize the WordPress database object.
 		global $wpdb;
 		$this->wpdb = $wpdb;
 
-		// Build the table name to use for this mapper.
-		$this->table_name = $this->wpdb->prefix . 'taxonomies';
-	}
+		// Builds the table name to use for the mapper.
+		$this->table_name = esc_sql( $wpdb->prefix . 'taxonomy' );
 
-	public function create_taxonomy( $data ) {
-
-	}
-
-	public function delete_taxonomy( $id ) {
-
-	}
-
-	public function fetch_taxonomy( $id ) {
-
-	}
-
-	public function fetch_taxonomies() {
-
-	}
-
-	public function update_taxonomy() {
+		// Let WordPress know we served an API request.
+		define( 'RESTFULWP_REQUEST_SERVED', true );
 
 	}
 

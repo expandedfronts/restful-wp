@@ -8,14 +8,16 @@ class PostsResource extends AbstractResourceListener
 {
 
     /**
-     * Stores a reference to the Posts Mapper.
+     * Stores an instance of the PostsMapper object
      * @var PostsMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the Posts Resource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The PostsMapper object
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
@@ -108,7 +110,6 @@ class PostsResource extends AbstractResourceListener
      */
     public function update($id, $data)
     {
-        return new ApiProblem(405, 'The PUT method has not been defined for individual resources');
+        return $this->mapper->update_post( $id, $data );
     }
-
 }

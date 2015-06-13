@@ -8,19 +8,20 @@ class CommentsResource extends AbstractResourceListener
 {
 
     /**
-     * Stores a reference to the Comments Mapper.
-     * @var OptionssMapper
+     * Stores an instance of the CommentsMapper object
+     * @var CommentsMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the Comments Resource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The CommentsMapper object.
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
     }
-
     /**
      * Create a resource
      *

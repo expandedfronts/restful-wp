@@ -6,61 +6,101 @@ use Zend\Paginator\Adapter\ArrayAdapter;
 
 class UsersMapper {
 
+	/**
+	 * The WordPress database object.
+	 * @var WPDB
+	 */
 	protected $wpdb;
 
+	/**
+	 * Stores the table name for this endpoint.
+	 * @var string
+	 */
 	protected $table_name;
 
+	/**
+	 * Constructs the class.
+	 *
+	 * @access public
+	 */
 	public function __construct() {
 
-		// Store the WordPress database object.
+		// Initialize the WordPress database object.
 		global $wpdb;
 		$this->wpdb = $wpdb;
 
-		// Build the table name to use for this mapper.
-		$this->table_name = $this->wpdb->prefix . 'users';
+		// Builds the table name to use for the mapper.
+		$this->table_name = esc_sql( $wpdb->prefix . 'users' );
 
-		define( 'WP_SHOULD_EXIT', true );
+		// Let WordPress know we served an API request.
+		define( 'RESTFULWP_REQUEST_SERVED', true );
+
 	}
 
+	/**
+	 * Creates a user.
+	 *
+	 * @access public
+	 * @param  mixed $data
+	 * @return boolean
+	 */
 	public function create_user( $data ) {
-		$user = wp_insert_user( $data );
-		if ( $user ) {
-			return true;
-		}
-		return false;
+		return wp_insert_user( $data );
 	}
 
+	/**
+	 * Deletes a user.
+	 *
+	 * @access public
+	 * @param  int $id The ID of the user to delete.
+	 * @return boolean
+	 */
 	public function delete_user( $id ) {
-		$deletion = wp_delete_user( $id );
-		if ( $deletion ) {
-			return true;
-		}
-		return false;
+		return wp_delete_user( $id );
 	}
 
+	/**
+	 * Fetches info on a user.
+	 *
+	 * @access public
+	 * @param  int $id The ID of the user to fetch.
+	 * @return mixed
+	 */
 	public function fetch_user( $id ) {
 		$sql 	= $this->wpdb->prepare( "SELECT * FROM $this->table_name WHERE ID = %d", $id );
 		$data 	= $this->wpdb->get_results( $sql, ARRAY_A );
+
+		if ( ! $data ) return false;
 
 		$entity = new UsersEntity();
 		$entity->exchangeArray( $data[0] );
 		return $entity;
 	}
 
-	public function fetch_users() {
+	/**
+	 * Fetches all users.
+	 *
+	 * @access public
+	 * @return mixed
+	 */
+	public function fetch_users( $params = array() ) {
 		$data 				= $this->wpdb->get_results( "SELECT * FROM $this->table_name", ARRAY_A );
+
+		if ( ! $data ) return false;
+
 		$paginator_adapter 	= new ArrayAdapter( $data );
 		$collection 		= new UsersCollection( $paginator_adapter );
 		return $collection;
 	}
 
+	/**
+	 * Updates a user.
+	 *
+	 * @access public
+	 * @param  mixed $data
+	 * @return boolean
+	 */
 	public function update_user( $id, $data ) {
-		$update = wp_update_user( $data );
-
-		if ( $update ) {
-			return true;
-		}
-		return false;
+		return wp_update_user( $data );
 	}
-
 }

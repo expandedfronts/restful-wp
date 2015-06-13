@@ -6,16 +6,17 @@ use ZF\Rest\AbstractResourceListener;
 
 class UsersResource extends AbstractResourceListener
 {
-
     /**
-     * Stores a reference to the Users Mapper.
+     * Stores an instance of the UsersMapper object
      * @var UsersMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the Users Resource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The UserMapper object
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
@@ -73,7 +74,7 @@ class UsersResource extends AbstractResourceListener
      */
     public function fetchAll($params = array())
     {
-        return $this->mapper->fetch_users();
+        return $this->mapper->fetch_users( $params );
     }
 
     /**

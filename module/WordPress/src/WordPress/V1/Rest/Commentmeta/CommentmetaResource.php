@@ -8,14 +8,16 @@ class CommentmetaResource extends AbstractResourceListener
 {
 
     /**
-     * Stores a reference to the Commentmeta Mapper.
-     * @var OptionssMapper
+     * Stores an instance of the CommentmetaMapper object.
+     * @var CommentmetaMapper
      */
     protected $mapper;
 
     /**
-     * Constructs the Commentmeta Resource.
+     * Constructs the class.
+     *
      * @access public
+     * @param  object $mapper The CommentmetaMapper Object
      */
     public function __construct( $mapper ) {
         $this->mapper = $mapper;
@@ -111,6 +113,12 @@ class CommentmetaResource extends AbstractResourceListener
         return $this->mapper->update_meta( $id, $data, $this->get_comment_id() );
     }
 
+    /**
+     * Returns the ID of the current comment.
+     *
+     * @access private
+     * @return int
+     */
     private function get_comment_id() {
         return $this->getEvent()->getRouteMatch()->getParam('comment_id');
     }
